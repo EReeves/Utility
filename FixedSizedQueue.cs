@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Shared.Utility
 {
+    /// <inheritdoc />
     /// <summary>
     /// Fixed size queue of type T.
     /// Items can only be added through Enqueue(), but can be indexed[] or enumerated.
