@@ -1,164 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using Nez.Console;
 
 namespace Game.Shared.Utility
 {
-    public class Clock
+    public class Benchmark
     {
-        interface IStopwatch
-        {
-            bool IsRunning { get; }
-            TimeSpan Elapsed { get; }
+        private static Benchmark instance;
+        private static Stopwatch stopwatch;
 
-            void Start();
-            void Stop();
-            void Reset();
+        public Benchmark()
+        {
+            if (!Stopwatch.IsHighResolution)
+                throw new NotSupportedException("Your hardware doesn't support high resolution counter");
+
+            //prevent the JIT Compiler from optimizing Fkt calls away
+            long seed = Environment.TickCount;
+
+            //use the second Core/Processor for the test
+            Process.GetCurrentProcess().ProcessorAffinity = new IntPtr(2);
+
+            //prevent "Normal" Processes from interrupting Threads
+            Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
+
+            //prevent "Normal" Threads from interrupting this thread
+            Thread.CurrentThread.Priority = ThreadPriority.Highest;
         }
 
+        private static long MillisecondsElapsed => stopwatch.ElapsedMilliseconds;
 
 
-        class TimeWatch : IStopwatch
+        public static void Go(Action action)
         {
-            Stopwatch stopwatch = new Stopwatch();
-
-            public TimeSpan Elapsed
-            {
-                get { return stopwatch.Elapsed; }
-            }
-
-            public bool IsRunning
-            {
-                get { return stopwatch.IsRunning; }
-            }
-
-
-
-            public TimeWatch()
-            {
-                if (!Stopwatch.IsHighResolution)
-                    throw new NotSupportedException("Your hardware doesn't support high resolution counter");
-
-                //prevent the JIT Compiler from optimizing Fkt calls away
-                long seed = Environment.TickCount;
-
-                //use the second Core/Processor for the test
-                Process.GetCurrentProcess().ProcessorAffinity = new IntPtr(2);
-
-                //prevent "Normal" Processes from interrupting Threads
-                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;
-
-                //prevent "Normal" Threads from interrupting this thread
-                Thread.CurrentThread.Priority = ThreadPriority.Highest;
-            }
-
-
-
-            public void Start()
-            {
-                stopwatch.Start();
-            }
-
-            public void Stop()
-            {
-                stopwatch.Stop();
-            }
-
-            public void Reset()
-            {
-                stopwatch.Reset();
-            }
-        }
-
-
-
-        class CpuWatch : IStopwatch
-        {
-            TimeSpan startTime;
-            TimeSpan endTime;
-            bool isRunning;
-
-
-
-            public TimeSpan Elapsed
-            {
-                get
-                {
-                    if (IsRunning)
-                        throw new NotImplementedException("Getting elapsed span while watch is running is not implemented");
-
-                    return endTime - startTime;
-                }
-            }
-
-            public bool IsRunning
-            {
-                get { return isRunning; }
-            }
-
-
-
-            public void Start()
-            {
-                startTime = Process.GetCurrentProcess().TotalProcessorTime;
-                isRunning = true;
-            }
-
-            public void Stop()
-            {
-                endTime = Process.GetCurrentProcess().TotalProcessorTime;
-                isRunning = false;
-            }
-
-            public void Reset()
-            {
-                startTime = TimeSpan.Zero;
-                endTime = TimeSpan.Zero;
-            }
-        }
-
-
-
-        public static void BenchmarkTime(Action action, int iterations = 10000)
-        {
-            Benchmark<TimeWatch>(action, iterations);
-        }
-
-        static void Benchmark<T>(Action action, int iterations) where T : IStopwatch, new()
-        {
-            //clean Garbage
-            GC.Collect();
-
-            //wait for the finalizer queue to empty
-            GC.WaitForPendingFinalizers();
-
-            //clean Garbage
-            GC.Collect();
-
-            //warm up
-            action();
-
-            var stopwatch = new T();
-            var timings = new double[5];
-            for (int i = 0; i < timings.Length; i++)
-            {
-                stopwatch.Reset();
-                stopwatch.Start();
-                for (int j = 0; j < iterations; j++)
-                    action();
-                stopwatch.Stop();
-                timings[i] = stopwatch.Elapsed.TotalMilliseconds;
-                Nez.Debug.log("Time(ms): "  + timings[i]);
-            }
-        }
-
-        public static void BenchmarkCpu(Action action, int iterations = 10000)
-        {
-            Benchmark<CpuWatch>(action, iterations);
+            instance = instance ?? new Benchmark();
+            stopwatch = Stopwatch.StartNew();
+            action.Invoke();
+            stopwatch.Stop();
+            DebugConsole.instance.log("Benchmark Result(ms): " + MillisecondsElapsed);
         }
     }
 }
