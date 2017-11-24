@@ -5,7 +5,7 @@ namespace Game.Shared.Utility
     public static class GenericExtensions
     {
         /// <summary>
-        /// Quick way to try get a value from a dictionary.
+        ///     Quick way to try get a value from a dictionary.
         /// </summary>
         /// <typeparam name="TK"></typeparam>
         /// <typeparam name="TV"></typeparam>

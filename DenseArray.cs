@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Game.Shared.Utility
 {
+    /// <inheritdoc />
     /// <summary>
-    /// An efficient 2D array.
-    /// Faster than T[,]  Almost as fast as T[][]
-    /// Smallest memory footprint.
+    ///     An efficient 2D array.
+    ///     Faster than T[,]  Almost as fast as T[][]
+    ///     Smallest memory footprint.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class DenseArray<T> : IEnumerable<T>
@@ -14,23 +16,8 @@ namespace Game.Shared.Utility
         private readonly T[] _dataarray;
         private int[] yIndexes;
 
-        public int SizeX { get; }
-        public int SizeY { get; }
-
         /// <summary>
-        /// Calculates the Y indexes
-        /// </summary>
-        private void CalculateYIndexes()
-        {
-            yIndexes = new int[SizeX];
-            for (var i = 0; i < SizeX; i++)
-            {
-                yIndexes[i] = i * SizeY;
-            }
-        }
-
-        /// <summary>
-        /// Creates a new instance of DenseArray
+        ///     Creates a new instance of DenseArray
         /// </summary>
         public DenseArray(int xsize, int ysize)
         {
@@ -42,7 +29,7 @@ namespace Game.Shared.Utility
         }
 
         /// <summary>
-        /// Creates a new instance of DenseArray
+        ///     Creates a new instance of DenseArray
         /// </summary>
         /// <param name="source">Source DenseArray</param>
         public DenseArray(DenseArray<T> source)
@@ -50,15 +37,18 @@ namespace Game.Shared.Utility
             _dataarray = new T[source.SizeX * source.SizeY];
             SizeX = source.SizeX;
             SizeY = source.SizeY;
-            Array.Copy(source._dataarray, this._dataarray, source._dataarray.LongLength);
+            Array.Copy(source._dataarray, _dataarray, source._dataarray.LongLength);
             yIndexes = new int[SizeY];
             Array.Copy(source.yIndexes,
-                this.yIndexes,
+                yIndexes,
                 source.yIndexes.LongLength);
         }
 
+        public int SizeX { get; }
+        public int SizeY { get; }
+
         /// <summary>
-        /// Gets or sets an element of the array
+        ///     Gets or sets an element of the array
         /// </summary>
         /// <returns>Value at x,y index</returns>
         public T this[int x, int y]
@@ -69,7 +59,7 @@ namespace Game.Shared.Utility
 
         /// <inheritdoc />
         /// <summary>
-        /// IEnumerable implementation.
+        ///     IEnumerable implementation.
         /// </summary>
         /// <returns>internal array enumerator</returns>
         public IEnumerator<T> GetEnumerator()
@@ -79,12 +69,22 @@ namespace Game.Shared.Utility
 
         /// <inheritdoc />
         /// <summary>
-        /// IEnumerable Implementation
+        ///     IEnumerable Implementation
         /// </summary>
         /// <returns>internal array enumerator</returns>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return _dataarray.GetEnumerator();
+        }
+
+        /// <summary>
+        ///     Calculates the Y indexes
+        /// </summary>
+        private void CalculateYIndexes()
+        {
+            yIndexes = new int[SizeY];
+            for (var i = 0; i < SizeY; i++)
+                yIndexes[i] = i * SizeY;
         }
     }
 }
