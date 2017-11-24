@@ -3,6 +3,12 @@ using System.Collections.Generic;
 
 namespace Game.Shared.Utility
 {
+    /// <summary>
+    /// An efficient 2D array.
+    /// Faster than T[,]  Almost as fast as T[][]
+    /// Smallest memory footprint.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class DenseArray<T> : IEnumerable<T>
     {
         private readonly T[] _dataarray;
