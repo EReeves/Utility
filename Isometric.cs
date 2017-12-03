@@ -9,63 +9,52 @@ using Nez.UI;
 namespace Game.Shared.Utility
 {
     public class Isometric
-    {    //Uses this map for tile width/height if not specified.
-        private static IsometricMap map;
-        public static IsometricMap Map
-        {
-            get => map;
-            set
-            {
-                map = value;
-                dimensions = new Vector2()
-                {
-                    X = (float)value.TileWidth/2,
-                    Y = (float)value.TileHeight/2
-                };
-            }
-        }
-
-        private static Vector2 dimensions;
-        
-        private const string mapNotDefined = "Map must be set if tile demensions aren't specified.";
+    {
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 WorldToIsometric(Vector2 pos)
+        public static Vector2 WorldToIsometric(Vector2 pos, IsometricMap map)
         {
-            Assert.isNotNull(Map, mapNotDefined);
-
+            var xd2 = map.TileWidth / 2;
+            var yd2 = map.TileHeight / 2;
+            
             return new Vector2()
             {
-                X = (pos.X / dimensions.X + pos.Y / dimensions.Y) / 2,
-                Y = (pos.Y / dimensions.Y - (pos.X / dimensions.X)) / 2
+                X = (pos.X / xd2 + pos.Y / yd2) / 2,
+                Y = (pos.Y / yd2 - (pos.X / xd2)) / 2
+            };
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2 WorldToIsometricWorld(Vector2 pos, IsometricMap map)
+        {
+            pos = new Vector2()
+            {
+                X = pos.X/map.TileHeight,
+                Y = pos.Y/map.TileHeight
+            };
+            return new Vector2()
+            {
+                X = (pos.X - pos.Y) * (map.TileWidth/2),
+                Y = (pos.X + pos.Y) * (map.TileHeight/2)
             };
         }
         
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 IsometricToWorld(Point pos)
+        public static Vector2 IsometricToWorld(Vector2 pos, IsometricMap map)
         {
-            Assert.isNotNull(Map, mapNotDefined);
             return new Vector2()
             {
-                X = (pos.X - pos.Y) * dimensions.X,
-                Y = (pos.X + pos.Y) * (38/2)
+                X = (pos.X - pos.Y) * (map.TileWidth/2),
+                Y = (pos.X + pos.Y) * (map.TileHeight/2)
             };
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 WorldToIsometric(Vector2 vec, Vector2 tileDimensions)
+        public static Vector2 IsometricToWorld(Point pos, IsometricMap map)
         {
-            throw new NotImplementedException();
+            return IsometricToWorld(new Vector2(pos.X, pos.Y), map);
         }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 IsometricToWorld(Vector2 vec, Vector2 tileDimensions)
-        {
-            throw new NotImplementedException();
-
-        }
-        
         
     }
 }
