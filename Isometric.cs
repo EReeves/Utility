@@ -11,6 +11,9 @@ namespace Game.Shared.Utility
     public class Isometric
     {
 
+        public const int RENDER_LAYER_START = 1000;
+   
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 WorldToIsometric(Vector2 pos, IsometricMap map)
         {
