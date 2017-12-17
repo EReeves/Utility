@@ -6,7 +6,7 @@ namespace Game.Shared.Utility
 {
     /// <inheritdoc />
     /// <summary>
-    /// Just so that it looks different in debug render.
+    ///     Just so that it looks different in debug render.
     /// </summary>
     public class PolygonColliderTrigger : PolygonCollider
     {
@@ -24,8 +24,8 @@ namespace Game.Shared.Utility
         {
             var poly = shape as Polygon;
             // ReSharper disable once PossibleNullReferenceException
-            graphics.batcher.drawPolygon( shape.position, poly.points, Color.AliceBlue, true, Debug.Size.lineSizeMultiplier );
-            
+            graphics.batcher.drawPolygon(shape.position, poly.points, Color.AliceBlue, true,
+                Debug.Size.lineSizeMultiplier);
         }
     }
 }

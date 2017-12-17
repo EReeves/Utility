@@ -54,7 +54,7 @@ namespace Game.Shared.Utility
             lock (syncRoot)
             {
                 var item = circularArray[readIndex];
-                circularArray[readIndex] = default(T);
+                circularArray[readIndex] = default;
                 readIndex = (readIndex + 1) % circularArray.Length;
                 return item;
             }
