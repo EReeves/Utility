@@ -1,6 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Nez;
-using Nez.PhysicsShapes;
+using Nez.Debug;
+using Nez.ECS.Components.Physics.Colliders;
+using Nez.Graphics;
+using Nez.Graphics.Batcher;
+using Nez.Physics.Shapes;
 
 namespace Game.Shared.Utility
 {
@@ -12,20 +16,22 @@ namespace Game.Shared.Utility
     {
         public PolygonColliderTrigger(Vector2[] points) : base(points)
         {
-            isTrigger = true;
+            IsTrigger = true;
         }
 
         public PolygonColliderTrigger(int vertCount, float radius) : base(vertCount, radius)
         {
-            isTrigger = true;
+            IsTrigger = true;
         }
 
-        public override void debugRender(Graphics graphics)
+        public float? Depth { get; set; } = null;
+
+        public override void DebugRender(Graphics graphics)
         {
-            var poly = shape as Polygon;
+            var poly = Shape as Polygon;
             // ReSharper disable once PossibleNullReferenceException
-            graphics.batcher.drawPolygon(shape.position, poly.points, Color.AliceBlue, true,
-                Debug.Size.lineSizeMultiplier);
+            graphics.Batcher.DrawPolygon(Shape.Position, poly.Points, Color.AliceBlue, true,
+                Debug.Size.LineSizeMultiplier);
         }
     }
 }
