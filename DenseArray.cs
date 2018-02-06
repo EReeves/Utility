@@ -13,7 +13,7 @@ namespace Game.Shared.Utility
     /// <typeparam name="T"></typeparam>
     public class DenseArray<T> : IEnumerable<T>
     {
-        private readonly T[] _dataarray;
+        private readonly T[] dataarray;
         private int[] yIndexes;
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace Game.Shared.Utility
         /// </summary>
         public DenseArray(int xsize, int ysize)
         {
-            _dataarray = new T[xsize * ysize];
+            dataarray = new T[xsize * ysize];
             SizeX = xsize;
             SizeY = ysize;
             //Speeds up indexing a whole lot
@@ -34,10 +34,10 @@ namespace Game.Shared.Utility
         /// <param name="source">Source DenseArray</param>
         public DenseArray(DenseArray<T> source)
         {
-            _dataarray = new T[source.SizeX * source.SizeY];
+            dataarray = new T[source.SizeX * source.SizeY];
             SizeX = source.SizeX;
             SizeY = source.SizeY;
-            Array.Copy(source._dataarray, _dataarray, source._dataarray.LongLength);
+            Array.Copy(source.dataarray, dataarray, source.dataarray.LongLength);
             yIndexes = new int[SizeY];
             Array.Copy(source.yIndexes,
                 yIndexes,
@@ -53,8 +53,8 @@ namespace Game.Shared.Utility
         /// <returns>Value at x,y index</returns>
         public T this[int x, int y]
         {
-            get => _dataarray[yIndexes[y] + x];
-            set => _dataarray[yIndexes[y] + x] = value;
+            get => dataarray[yIndexes[y] + x];
+            set => dataarray[yIndexes[y] + x] = value;
         }
 
         /// <inheritdoc />
@@ -64,7 +64,7 @@ namespace Game.Shared.Utility
         /// <returns>internal array enumerator</returns>
         public IEnumerator<T> GetEnumerator()
         {
-            return (IEnumerator<T>) _dataarray.GetEnumerator();
+            return ((IEnumerable<T>) dataarray).GetEnumerator();
         }
 
         /// <inheritdoc />
@@ -74,7 +74,7 @@ namespace Game.Shared.Utility
         /// <returns>internal array enumerator</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return _dataarray.GetEnumerator();
+            return dataarray.GetEnumerator();
         }
 
         /// <summary>
