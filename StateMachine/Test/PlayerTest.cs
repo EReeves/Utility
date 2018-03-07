@@ -4,12 +4,12 @@ namespace Game.Shared.Utility.StateMachine.Test
 {
     public class PlayerTest
     {
-        public readonly StateMachine<PlayerTest> States;
-        public bool HeardBadJoke = true;
+        public readonly PlayerState States;
+        
         
         public PlayerTest()
         {
-             States = new StateMachine<PlayerTest>(this);
+             States = new PlayerState(this);
              States.ChangeState<LaughingState>();
         }
 

@@ -12,7 +12,7 @@ namespace Game.Shared.Utility.StateMachine.Test
         public void Update()
         {
             Console.WriteLine("*Laugh*");
-            if (Parent.HeardBadJoke)
+            if (Parent.States.HeardBadJoke)
             {
                 Parent.States.ChangeState<NotAmusedState>();
             }

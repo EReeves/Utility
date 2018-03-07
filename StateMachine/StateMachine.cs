@@ -11,8 +11,8 @@ namespace Game.Shared.Utility.StateMachine
 
         public IState<T> Current { get; private set; }
         private readonly T parent;
-
-        public StateMachine(T parentIn)
+        
+        protected StateMachine(T parentIn)
         {
             parent = parentIn;
         }
@@ -26,9 +26,9 @@ namespace Game.Shared.Utility.StateMachine
                 states.Add(type, state);
             }
 
-            Current.Stop();
+            Current?.Stop();
             Current = state;
-            Current.Start();
+            Current?.Start();
 
             return Current;
         }
@@ -45,5 +45,6 @@ namespace Game.Shared.Utility.StateMachine
         }
 
         public void Update() => Current.Update();
+        
     }
 }
