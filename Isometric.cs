@@ -1,12 +1,42 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using Game.Shared.Components.Map;
+using Lidgren.Network;
 using Microsoft.Xna.Framework;
+using Nez.Maths;
+using Nez.Utils.Extensions;
 
 namespace Game.Shared.Utility
 {
-    public class Isometric
+    public static class Isometric
     {
         public static int RenderLayerStart { get; set; } = 1000;
+
+        public static Vector2 NE;
+        public static Vector2 NW;
+        public static Vector2 SE;
+        public static Vector2 SW;
+
+        public static Vector2 RadianToVector2(float radian)
+        {
+            return new Vector2(Mathf.Cos(radian), Mathf.Sin(radian));
+        }
+      
+        public static Vector2 DegreeToVector2(float degree)
+        {
+            return RadianToVector2(degree * Mathf.Deg2Rad);
+        }
+        
+        public static void CalculateDirectionals()
+        {
+            var dir = IsometricToWorld(new Point(1, 1),IsometricMap.Instance);
+            dir.Normalize();
+            
+            NE = dir;
+            NW = dir.FlipX();
+            SE = dir.FlipY();
+            SW = dir.FlipX().FlipY();
+        }
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

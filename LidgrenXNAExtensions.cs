@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-
 using Lidgren.Network;
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 
-namespace Lidgren.Network.Xna
+namespace Game.Shared.Utility
 {
-	public static class XNAExtensions
+	public static class LidgrenXNAExtensions
 	{
 		/// <summary>
 		/// Write a Point
