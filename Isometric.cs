@@ -29,7 +29,7 @@ namespace Game.Shared.Utility
         
         public static void CalculateDirectionals()
         {
-            var dir = IsometricToWorld(new Point(1, 1),IsometricMap.Instance);
+            var dir = IsometricToWorld(new Point(0, -1),IsometricMap.Instance);
             dir.Normalize();
             
             NE = dir;
