@@ -1,10 +1,12 @@
-﻿namespace Game.Shared.Utility.StateMachine
+﻿using Game.Shared.Core;
+
+namespace Game.Shared.Utility.StateMachine
 {
     public interface IState<T>
     {
         T Parent { get; set; }
-        void Start();  
+        void Start();
         void Stop();
-        void Update();
+        void Update(CoreTime time);
     }
 }

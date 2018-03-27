@@ -6,7 +6,7 @@ namespace Game.Shared.Components.Map
 {
     public static class TiledParserReaderExtension
     {
-                //XmlReader Read without all the garbage.
+        //XmlReader Read without all the garbage.
         public static bool ReadNext(this XmlReader rdr)
         {
             //If it's whitespace or garbage keep reading.
@@ -34,7 +34,7 @@ namespace Game.Shared.Components.Map
                 rdr.Read();
 
                 if (rdr.Name != "properties") continue;
-                for(var i=0;i<bufferRead;i++) rdr.Read();
+                for (var i = 0; i < bufferRead; i++) rdr.Read();
                 return false; //End element, no more properties, Read past it and return false;           
             }
 
@@ -54,7 +54,7 @@ namespace Game.Shared.Components.Map
                 yield return rdr;
             }
         }
-        
+
         /// <summary>
         ///     Iterate over everything within a node not including data.
         /// </summary>
@@ -77,7 +77,6 @@ namespace Game.Shared.Components.Map
 
             var propertyName = string.Empty;
             while (rdr.MoveToNextAttribute())
-            {
                 switch (rdr.Name)
                 {
                     case "name":
@@ -87,11 +86,10 @@ namespace Game.Shared.Components.Map
                         dictionary.Add(propertyName, rdr.Value);
                         break;
                 }
-            }
 
             return dictionary;
         }
-        
+
         /// <summary>
         ///     Iterates the node, invokes mapping and processes on inVal;
         /// </summary>
@@ -101,7 +99,8 @@ namespace Game.Shared.Components.Map
         /// <param name="includeData">If false only the parameters will processed, not the data. Default includes data.</param>
         /// <typeparam name="T">The Type used for inVal and the mapping type</typeparam>
         /// <returns>processed inVal</returns>
-        public static T ProcessNodeMap<T>(this XmlReader rdr, IReadOnlyDictionary<string, Action<XmlReader, T>> map, T inVal,
+        public static T ProcessNodeMap<T>(this XmlReader rdr, IReadOnlyDictionary<string, Action<XmlReader, T>> map,
+            T inVal,
             bool includeData = true)
         {
             var enumerable = includeData ? rdr.IterateNodeEnumerable() : rdr.IterateNodeEnumerableShort();

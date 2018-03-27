@@ -1,41 +1,44 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using Game.Shared.Components.Map;
-using Lidgren.Network;
 using Microsoft.Xna.Framework;
+using MonoGame.Extended;
 using Nez.Maths;
-using Nez.Utils.Extensions;
 
 namespace Game.Shared.Utility
 {
     public static class Isometric
     {
-        public static int RenderLayerStart { get; set; } = 1000;
-
         public static Vector2 NE;
         public static Vector2 NW;
         public static Vector2 SE;
         public static Vector2 SW;
+        public static int RenderLayerStart { get; set; } = 1000;
 
         public static Vector2 RadianToVector2(float radian)
         {
-            return new Vector2(Mathf.Cos(radian), Mathf.Sin(radian));
+            return new Vector2((float) Math.Cos(radian), (float) Math.Sin(radian));
         }
-      
+
         public static Vector2 DegreeToVector2(float degree)
         {
             return RadianToVector2(degree * Mathf.Deg2Rad);
         }
-        
+
         public static void CalculateDirectionals()
         {
-            var dir = IsometricToWorld(new Point(0, -1),IsometricMap.Instance);
+            var dir = IsometricToWorld(new Point(0, -1), IsometricMap.Instance);
             dir.Normalize();
-            
+
             NE = dir;
             NW = dir.FlipX();
             SE = dir.FlipY();
             SW = dir.FlipX().FlipY();
+        }
+
+        public static Size2 ToIsometic(this Size2 size, IsometricMap map)
+        {
+            return new Size2(size.Width / map.TileWidth, size.Height / map.TileHeight);
         }
 
 

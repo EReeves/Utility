@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Shared.Core;
 
 namespace Game.Shared.Utility.StateMachine.Test
 {
@@ -6,16 +7,20 @@ namespace Game.Shared.Utility.StateMachine.Test
     {
         public PlayerTest Parent { get; set; }
 
-        public void Start() => Console.WriteLine("*Smirk*");
-        public void Stop() => Console.WriteLine("*Stops laughing*");
+        public void Start()
+        {
+            Console.WriteLine("*Smirk*");
+        }
 
-        public void Update()
+        public void Stop()
+        {
+            Console.WriteLine("*Stops laughing*");
+        }
+
+        public void Update(CoreTime coreTime)
         {
             Console.WriteLine("*Laugh*");
-            if (Parent.States.HeardBadJoke)
-            {
-                Parent.States.ChangeState<NotAmusedState>();
-            }
-        }   
+            if (Parent.States.HeardBadJoke) Parent.States.ChangeState<NotAmusedState>();
+        }
     }
 }

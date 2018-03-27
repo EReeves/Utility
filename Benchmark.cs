@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
-using Nez.Utils.DebugConsole;
 
 namespace Game.Shared.Utility
 {
@@ -28,7 +27,7 @@ namespace Game.Shared.Utility
             stopwatch = Stopwatch.StartNew();
             action.Invoke();
             stopwatch.Stop();
-            DebugConsole.Instance.Log($"Benchmark Result(ms): {MillisecondsElapsed}");
+            QConsole.Instance.Log($"Benchmark Result(ms): {MillisecondsElapsed}");
         }
     }
 }

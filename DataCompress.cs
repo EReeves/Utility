@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 
 namespace Game.Shared.Utility
 {
@@ -64,7 +63,7 @@ namespace Game.Shared.Utility
             } while (ch != '\0');
 
             var length = cnt;
-            var evenOrOdd = ((length & 1) == 0) ? "even" : "odd";
+            var evenOrOdd = (length & 1) == 0 ? "even" : "odd";
             Console.WriteLine(evenOrOdd);
         }
     }
