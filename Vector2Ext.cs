@@ -229,14 +229,14 @@ namespace Game.Shared.Utility
         }
 
 
-	    /// <summary>
-	    ///     Creates a new <see cref="Vector2" /> that contains a transformation of 2d-vector by the specified
-	    ///     <see cref="Matrix" />.
-	    /// </summary>
-	    /// <param name="position">Source <see cref="Vector2" />.</param>
-	    /// <param name="matrix">The transformation <see cref="Matrix" />.</param>
-	    /// <returns>Transformed <see cref="Vector2" />.</returns>
-	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        /// <summary>
+        ///     Creates a new <see cref="Vector2" /> that contains a transformation of 2d-vector by the specified
+        ///     <see cref="Matrix" />.
+        /// </summary>
+        /// <param name="position">Source <see cref="Vector2" />.</param>
+        /// <param name="matrix">The transformation <see cref="Matrix" />.</param>
+        /// <returns>Transformed <see cref="Vector2" />.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 Transform(this Vector2 position, Matrix2D matrix)
         {
             return new Vector2(position.X * matrix.M11 + position.Y * matrix.M21 + matrix.M31,
@@ -244,14 +244,14 @@ namespace Game.Shared.Utility
         }
 
 
-	    /// <summary>
-	    ///     Creates a new <see cref="Vector2" /> that contains a transformation of 2d-vector by the specified
-	    ///     <see cref="Matrix" />.
-	    /// </summary>
-	    /// <param name="position">Source <see cref="Vector2" />.</param>
-	    /// <param name="matrix">The transformation <see cref="Matrix" />.</param>
-	    /// <param name="result">Transformed <see cref="Vector2" /> as an output parameter.</param>
-	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        /// <summary>
+        ///     Creates a new <see cref="Vector2" /> that contains a transformation of 2d-vector by the specified
+        ///     <see cref="Matrix" />.
+        /// </summary>
+        /// <param name="position">Source <see cref="Vector2" />.</param>
+        /// <param name="matrix">The transformation <see cref="Matrix" />.</param>
+        /// <param name="result">Transformed <see cref="Vector2" /> as an output parameter.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Transform(this Vector2 position, ref Matrix2D matrix, out Vector2 result)
         {
             var x = position.X * matrix.M11 + position.Y * matrix.M21 + matrix.M31;
@@ -261,20 +261,20 @@ namespace Game.Shared.Utility
         }
 
 
-	    /// <summary>
-	    ///     Apply transformation on vectors within array of <see cref="Vector2" /> by the specified <see cref="Matrix" /> and
-	    ///     places the results in an another array.
-	    /// </summary>
-	    /// <param name="sourceArray">Source array.</param>
-	    /// <param name="sourceIndex">The starting index of transformation in thhis e source array.</param>
-	    /// <param name="matrix">The transformation <see cref="Matrix" />.</param>
-	    /// <param name="destinationArray">Destination array.</param>
-	    /// <param name="destinationIndex">
-	    ///     The starting index in the destination array, where the first <see cref="Vector2" />
-	    ///     should be written.
-	    /// </param>
-	    /// <param name="length">The number of vectors to be transformed.</param>
-	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        /// <summary>
+        ///     Apply transformation on vectors within array of <see cref="Vector2" /> by the specified <see cref="Matrix" /> and
+        ///     places the results in an another array.
+        /// </summary>
+        /// <param name="sourceArray">Source array.</param>
+        /// <param name="sourceIndex">The starting index of transformation in thhis e source array.</param>
+        /// <param name="matrix">The transformation <see cref="Matrix" />.</param>
+        /// <param name="destinationArray">Destination array.</param>
+        /// <param name="destinationIndex">
+        ///     The starting index in the destination array, where the first <see cref="Vector2" />
+        ///     should be written.
+        /// </param>
+        /// <param name="length">The number of vectors to be transformed.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Transform(Vector2[] sourceArray, int sourceIndex, ref Matrix2D matrix,
             Vector2[] destinationArray, int destinationIndex, int length)
         {
@@ -289,39 +289,39 @@ namespace Game.Shared.Utility
         }
 
 
-	    /// <summary>
-	    ///     Apply transformation on all vectors within array of <see cref="Vector2" /> by the specified <see cref="Matrix" />
-	    ///     and places the results in an another array.
-	    /// </summary>
-	    /// <param name="sourceArray">Source array.</param>
-	    /// <param name="matrix">The transformation <see cref="Matrix" />.</param>
-	    /// <param name="destinationArray">Destination array.</param>
-	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        /// <summary>
+        ///     Apply transformation on all vectors within array of <see cref="Vector2" /> by the specified <see cref="Matrix" />
+        ///     and places the results in an another array.
+        /// </summary>
+        /// <param name="sourceArray">Source array.</param>
+        /// <param name="matrix">The transformation <see cref="Matrix" />.</param>
+        /// <param name="destinationArray">Destination array.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Transform(Vector2[] sourceArray, ref Matrix2D matrix, Vector2[] destinationArray)
         {
             Transform(sourceArray, 0, ref matrix, destinationArray, 0, sourceArray.Length);
         }
 
-	    /// <summary>
-	    ///     True if both of a's X and Y values are less than b.
-	    /// </summary>
-	    /// t
-	    /// <param name="a"></param>
-	    /// <param name="b"></param>
-	    /// <returns></returns>
-	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        /// <summary>
+        ///     True if both of a's X and Y values are less than b.
+        /// </summary>
+        /// t
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool LessThan(this Vector2 a, Vector2 b)
         {
             return a.X < b.X && a.Y < b.Y;
         }
 
-	    /// <summary>
-	    ///     True if both of a's X and Y values are more than b.
-	    /// </summary>
-	    /// <param name="a"></param>
-	    /// <param name="b"></param>
-	    /// <returns></returns>
-	    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        /// <summary>
+        ///     True if both of a's X and Y values are more than b.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool MoreThan(this Vector2 a, Vector2 b)
         {
             return a.X > b.X && a.Y > b.Y;
