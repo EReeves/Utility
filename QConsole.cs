@@ -37,6 +37,7 @@ namespace Game.Shared.Utility
         public CoreController Core { get; set; }
         public bool Enabled { get; set; } = true;
         public Camera2D Camera { get; set; }
+        public string Name { get; set; }
 
         public void Log(string str)
         {
@@ -51,8 +52,8 @@ namespace Game.Shared.Utility
 
         private void ServerCommand(string[] strings)
         {
-            var network = NetworkSingleton.Instance;
-            network.InitNetwork(NetworkSingleton.NetworkType.Listen);
+            var network = Core.GetComponent<Network.Network>();
+            network.InitNetwork(Network.Network.NetworkType.Listen);
             network.Server.Listen(1777);
             var timer = new Timer
             {
